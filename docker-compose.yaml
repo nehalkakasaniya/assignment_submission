@@ -39,7 +39,7 @@ services:
 
   edge:
     image: selenium/node-edge:latest
-    shm_size: '2g'
+    shm_size: '4g'
     environment:
       HUB_HOST: hub
       SE_EVENT_BUS_HOST: hub
