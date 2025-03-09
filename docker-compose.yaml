@@ -1,0 +1,70 @@
+services:
+  hub:
+    image: selenium/hub:latest
+    ports:
+      - "4444:4444"
+    logging:
+      driver: "none"    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4444/status"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - grid-network
+
+  chrome:
+    image: selenium/node-chrome:latest
+    environment:
+      HUB_HOST: hub
+      SE_EVENT_BUS_HOST: hub
+      SE_EVENT_BUS_PUBLISH_PORT: 4442
+      SE_EVENT_BUS_SUBSCRIBE_PORT: 4443
+    depends_on:
+      - hub
+    networks:
+      - grid-network
+
+  firefox:
+    image: selenium/node-firefox:latest
+    environment:
+      HUB_HOST: hub
+      SE_EVENT_BUS_HOST: hub
+      SE_EVENT_BUS_PUBLISH_PORT: 4442
+      SE_EVENT_BUS_SUBSCRIBE_PORT: 4443
+    depends_on:
+      - hub
+    networks:
+      - grid-network
+
+  edge:
+    image: selenium/node-edge:latest
+    shm_size: '2g'
+    environment:
+      HUB_HOST: hub
+      SE_EVENT_BUS_HOST: hub
+      SE_EVENT_BUS_PUBLISH_PORT: 4442
+      SE_EVENT_BUS_SUBSCRIBE_PORT: 4443
+    logging:
+      driver: "none"
+    depends_on:
+      - hub
+    networks:
+      - grid-network
+
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    depends_on:
+      - hub
+      - chrome
+      - firefox
+    environment:
+      SELENIUM_GRID_URL: "http://hub:4444"
+    networks:
+      - grid-network
+
+networks:
+  grid-network:
+    driver: bridge

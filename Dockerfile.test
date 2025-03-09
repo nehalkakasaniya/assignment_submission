@@ -1,0 +1,15 @@
+# Use a slim Maven image with Java 21 as the base
+FROM maven:3.9.9-eclipse-temurin-21
+
+# Set working directory
+WORKDIR /app
+
+# Copy project files
+COPY . /app
+
+# Resolve Maven dependencies
+RUN mvn dependency:resolve
+
+CMD ["/bin/bash", "-c", "\
+    sleep 10 && \
+    mvn clean test"]
