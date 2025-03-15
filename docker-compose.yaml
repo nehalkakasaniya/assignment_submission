@@ -60,6 +60,7 @@ services:
       - hub
       - chrome
       - firefox
+      - edge
     environment:
       SELENIUM_GRID_URL: "http://hub:4444"
     networks:
