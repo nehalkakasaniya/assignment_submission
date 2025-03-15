@@ -20,6 +20,8 @@ services:
       SE_EVENT_BUS_HOST: hub
       SE_EVENT_BUS_PUBLISH_PORT: 4442
       SE_EVENT_BUS_SUBSCRIBE_PORT: 4443
+      VNC_NO_PASSWORD: false
+      VNC_PASSWORD: test
     depends_on:
       - hub
     networks:
@@ -32,6 +34,8 @@ services:
       SE_EVENT_BUS_HOST: hub
       SE_EVENT_BUS_PUBLISH_PORT: 4442
       SE_EVENT_BUS_SUBSCRIBE_PORT: 4443
+      VNC_NO_PASSWORD: false
+      VNC_PASSWORD: test
     depends_on:
       - hub
     networks:
@@ -45,6 +49,8 @@ services:
       SE_EVENT_BUS_HOST: hub
       SE_EVENT_BUS_PUBLISH_PORT: 4442
       SE_EVENT_BUS_SUBSCRIBE_PORT: 4443
+      VNC_NO_PASSWORD: false
+      VNC_PASSWORD: test
     logging:
       driver: "none"
     depends_on:
